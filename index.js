@@ -15,12 +15,12 @@ app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.b9zut.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-console.log(uri);
+// console.log(uri);
 
 async function run() {
     try {
         await client.connect();
-        console.log("connected to database")
+        // console.log("connected to database")
         const database = client.db("jum-TT");
         const servicesCollection = database.collection("services");
         // Get service
@@ -32,7 +32,7 @@ async function run() {
         // Single service
         app.get("/services/:id", async (req, res) => {
             const id = req.params.id;
-            console.log("getting id", id);
+            // console.log("getting id", id);
             const query = { _id: ObjectId(id) };
             const service = await servicesCollection.findOne(query);
             res.json(service)
@@ -41,7 +41,7 @@ async function run() {
         // // Post Api
         app.post("/services", async (req, res) => {
             const service = req.body;
-            console.log("hit the api", service);
+            // console.log("hit the api", service);
             const result = await servicesCollection.insertOne(service);
             res.json(result);
         })
@@ -61,7 +61,7 @@ run().catch(console.dir);
 
 
 app.get("/", (req, res) => {
-    res.send("running JUM T&T server")
+    res.send("Running JUM T&T Server")
 })
 
 
